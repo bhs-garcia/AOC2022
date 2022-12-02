@@ -1,5 +1,7 @@
 # Name:
 # Period:
+
+#Functions needs for Part #2
 def checkLarger(numbers, num):
 	for x in numbers:
 		if(num>x):
@@ -26,7 +28,9 @@ with open('input.txt') as f:
 		else:
 			totals.append(total)
 			total=0
-	'''max = 0
+	'''
+	Code for part #1
+	max = 0
 	for x in range(len(totals)):
 		if(totals[x]> totals[max]):
 			max = x
@@ -34,6 +38,7 @@ with open('input.txt') as f:
 	print(totals[max])
 	print(totals)'''
 
+	#Code for part #2
 	max3 = [0,0,0]
 	for x in totals:
 		if(checkLarger(max3,x)==True):
