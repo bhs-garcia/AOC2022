@@ -1,9 +1,11 @@
-#PART #1 METHODS
+#PART #1 Function
 def find(first, second):
 	for letter in first:
 		if(letter in second):
 			return letter
 	print("something wrong")	
+
+#Function used in Part 1 and Part 2
 def priority(letter):
 	number =  ord(letter)
 	#print(letter)
@@ -12,7 +14,7 @@ def priority(letter):
 	if(number>=97 and number<=122):
 		return number - 96
 
-#PART #2 Methods
+#PART #2 Function
 def find2(first, second, third):
 	for letter in first:
 		if(letter in second and letter in third):
@@ -32,6 +34,7 @@ with open('input.txt') as f:
 	print("total", total)
 '''
 
+#Part 2 main
 with open('input.txt') as f:
 	lines = f.readlines()
 	total = 0
