@@ -32,24 +32,49 @@ def moveCrates2(stacks, number, fromStack, toStack):
 	for x in range(number):
 		item = stacks[fromStack].pop(loc)
 		stacks[toStack].append(item)
-		
+
+#Extra methods created to have non-hard coded input
+#Finds the line number of where the stack numbers are and
+#returns that number
+def stack_line(lines):
+	x = 0
+	for line in lines:
+		line = line.strip()
+		info = line.split(" ")
+		if(info[0]=="1"):
+			return x
+		x += 1
+	return -1
+#Find the line number and returns the number of the last stack
+def stack_count(lines):
+	x = 0
+	for line in lines:
+		line = line.strip()
+		info = line.split(" ")
+		if(info[0]=="1"):
+			return int(info[-1])
+		x += 1
+	return -1	
+
 with open('input.txt') as f:
 	lines = f.readlines()
-	stacks = [[],[],[],[],[],[],[],[],[]]
+	#stacks = [[],[],[],[],[],[],[],[],[]]
+	stacks = []
+	stack_line_number = stack_line(lines)
+	
+	for x in range(stack_count(lines)):
+		stacks.append([])
 	
 	#slice starts at line 8, counting backwards by -1, to the beginning part of the list
-	for line in lines[7::-1]:
+	for line in lines[stack_line_number-1::-1]:
 		line = line.strip("\n")
 		stack = 0
 		for x in range(1,len(line),4):
-		#	print(line[x], end="")
 			if(line[x]!=" "):
 				stacks[stack].append(line[x])
 			stack +=1
-		#print()
 	
-	#print_stack(stacks)
-	for line in lines[10:]:
+	for line in lines[stack_line_number+2:]:
 		#Remove the \n character at the end
 		line = line.strip("\n") 
 		
