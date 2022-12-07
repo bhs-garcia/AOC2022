@@ -17,6 +17,7 @@ class Directory:
 		self.files = []
 		self.previous = prevDirectory
 		self.size = 0
+	
 	def add_directory(self, directory):
 		self.directories.append(directory)
 	def add_file(self, newFile):
@@ -39,14 +40,31 @@ class Directory:
 				return i
 			i+=1
 		print("something wrong! couldn't find ",name)
-
+def setDirectorySizes(root):
+	total = 0
+	for currentFiles in root.files:
+		total += currentFiles.size
+	for currentDirectory in root.directories:
+		total += setDirectorySizes(currentDirectory)
+	root.size = total
+	return total
+def getDirectoryTotal(root):
+	total=0
+	#print(f"looking at {root} with size {root.size}")
+	#print(f"length of dirs {len(root.directories)}")
+	if(root.size<=100000):
+		total += root.size
+	for currentDirectory in root.directories:
+		total += getDirectoryTotal(currentDirectory)
+	return total
+	
 with open('input.txt') as f:
 	lines = f.readlines()
 	
 	root = Directory("/")
 	current = root
 	
-	for line in lines[2:25]:
+	for line in lines[2:]:
 		line = line.strip() 
 		sub = line[0:3]
 		
@@ -73,6 +91,7 @@ with open('input.txt') as f:
 			print("Now in",current)
 		elif(line[0:4]=="$ ls"):
 			#if it a ls, ignore
+			print("\nfound command:", line)
 			continue
 		else:
 			#if its a file
@@ -83,8 +102,10 @@ with open('input.txt') as f:
 			name = line[space+1:]
 			
 			currentFile = File_info(name,number)
-			
 			current.add_file(currentFile)
-			
-		
+
 	print(root)
+	root2 = root
+	print("root directory size",setDirectorySizes(root2))
+	print("total size of dirs less then 100000:",getDirectoryTotal(root))
+	
