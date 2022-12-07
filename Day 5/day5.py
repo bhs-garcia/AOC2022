@@ -9,7 +9,7 @@ def convert(info):
 	for let in info:
 		numbers.append(int(let))
 	return numbers
-#Method used for Both Parts
+#Extra method used for debugging 
 def top(stacks):
 	letters = ""
 	for stack in stacks:
@@ -33,7 +33,7 @@ def moveCrates2(stacks, number, fromStack, toStack):
 		item = stacks[fromStack].pop(loc)
 		stacks[toStack].append(item)
 
-#Extra methods created to have non-hard coded input
+#Extra methods created to have non-hard coded input.
 #Finds the line number of where the stack numbers are and
 #returns that number
 def stack_line(lines):
@@ -65,7 +65,8 @@ with open('input.txt') as f:
 	for x in range(stack_count(lines)):
 		stacks.append([])
 	
-	#slice starts at line 8, counting backwards by -1, to the beginning part of the list
+	#slice starts at below the stack_line_number, 
+	#counting backwards by -1, to the beginning part of the input
 	for line in lines[stack_line_number-1::-1]:
 		line = line.strip("\n")
 		stack = 0
