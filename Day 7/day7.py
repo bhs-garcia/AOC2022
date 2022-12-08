@@ -57,7 +57,16 @@ def getDirectoryTotal(root):
 	for currentDirectory in root.directories:
 		total += getDirectoryTotal(currentDirectory)
 	return total
-	
+#Method needed for Part 1
+def getDirectorySizes(root, number):
+	totals=[]
+	if(root.size>=number):
+		totals.append(root.size)
+	for currentDirectory in root.directories:
+		if(currentDirectory.size>=number):
+			totals.extend(getDirectorySizes(currentDirectory,number))
+	return totals
+
 with open('input.txt') as f:
 	lines = f.readlines()
 	
@@ -70,7 +79,7 @@ with open('input.txt') as f:
 		
 		if(sub=="dir"):
 			#if its a directory
-			print("found dir:", line)
+			#print("found dir:", line)
 			
 			name = line[4:]
 
@@ -78,8 +87,8 @@ with open('input.txt') as f:
 
 		elif(line[0:4]=="$ cd"):
 			#if it a cd
-			print("\nfound command:", line)
-			print(current,end=" ")
+			#print("\nfound command:", line)
+			#print(current,end=" ")
 			space = line.rfind(" ")
 			name = line[space+1:]
 			loc = current.find_directory(name)
@@ -88,14 +97,14 @@ with open('input.txt') as f:
 				current = current.previous
 			else:
 				current = current.directories[loc]
-			print("Now in",current)
+			#print("Now in",current)
 		elif(line[0:4]=="$ ls"):
 			#if it a ls, ignore
-			print("\nfound command:", line)
+			#print("\nfound command:", line)
 			continue
 		else:
 			#if its a file
-			print("\tfound file:", line)
+			#print("\tfound file:", line)
 			
 			space = line.find(" ")
 			number = int(line[:space])
@@ -104,8 +113,17 @@ with open('input.txt') as f:
 			currentFile = File_info(name,number)
 			current.add_file(currentFile)
 
-	print(root)
+	#print(root)
 	root2 = root
 	print("root directory size",setDirectorySizes(root2))
-	print("total size of dirs less then 100000:",getDirectoryTotal(root))
+	totalSize = getDirectoryTotal(root) #1315285
+	print("total size of dirs less then 100000:",totalSize)
 	
+	print("\nPart 2 answer")
+	#PART #2
+	needed = (root.size-40000000)
+	numbers = getDirectorySizes(root,needed)
+	numbers.sort()
+	print("all directory numbers over amount needed", numbers)
+	print("the answer is", numbers[0])
+#31535668 is too high
