@@ -43,4 +43,3 @@ with open('input.txt') as f:
 		if(check2(info)):
 			count+=1
 	print("count",count)
-
